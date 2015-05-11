@@ -4,15 +4,23 @@ element_k(X, L, K) :- L = [H | T], element_k(X, T, Y), K is Y + 1.
 make :- consult('mot.pl'), consult('terminaison.pl'), consult('conjugaison.pl').
 
 
-ph --> gn(Personne1), gv(Personne2), coordination, ph, {concordance(Personne1, Personne2)}.
+ph --> gn(Personne1), suite_verbale(Personne2), {concordance(Personne1, Personne2)}.
 
-ph --> gn(Personne1), gv(Personne2), {concordance(Personne1, Personne2)}.
+suite_verbale(Personne) --> gv(Personne).
+suite_verbale(Personne) --> gv(Personne), gn(_).
+suite_verbale(Personne) --> gv(Personne), coordination, ph.
 
-ph --> gn(Personne1), gv(Personne2), gn(_), {concordance(Personne1, Personne2)}.
+gn(Personne) --> [Article], suite_nominale(Personne), {analyse(Article, _, article, _, Personne)}.
 
-gn(Personne) --> [Article], [Nom], {analyse(Article, _, article, _, Personne), analyse(Nom, _, nom, _, Personne)}.
+suite_nominale(Personne) --> [Nom], {analyse(Nom, _, nom, _, Personne)}.
 
-gn(Personne) --> [Article], [Nom],  [Adjectif], {analyse(Article, _, article, _, Personne), analyse(Nom, _, nom, _, Personne), analyse(Adjectif, _, adjectif, _, Personne)}.
+suite_nominale(Personne) --> [Adjectif], [Nom], {analyse(Adjectif, _, adjectif, _, Personne), analyse(Nom, _, nom, _, Personne)}.
+suite_nominale(Personne) --> [Nom], [Adjectif], {analyse(Adjectif, _, adjectif, _, Personne), analyse(Nom, _, nom, _, Personne)}.
+
+suite_nominale(Personne) --> [Adjectif1], [Adjectif2], [Nom], {analyse(Adjectif1, _, adjectif, _, Personne), analyse(Adjectif2, _, adjectif, _, Personne), analyse(Nom, _, nom, _, Personne)}.
+suite_nominale(Personne) --> [Adjectif1], [Nom], [Adjectif2], {analyse(Adjectif1, _, adjectif, _, Personne), analyse(Adjectif2, _, adjectif, _, Personne), analyse(Nom, _, nom, _, Personne)}.
+
+suite_nominale(Personne) --> [Adjectif1], [Adjectif2], [Nom], [Adjectif3], {analyse(Adjectif1, _, adjectif, _, Personne), analyse(Adjectif2, _, adjectif, _, Personne), analyse(Nom, _, nom, _, Personne), analyse(Adjectif3, _, adjectif, _, Personne)}.
 
 coordination --> [Coordination], {analyse(Coordination, _, coordination, _, _)}.
 
