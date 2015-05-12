@@ -12,3 +12,5 @@ mot(bleu, adjectif, bleu, "bleu", 1).
 
 mot(mais, coordination, conjnul, "mais", 1).
 mot(et, coordination, conjnul, "et", 1).
+
+mot(qui, relative, conjnul, "qui", 1).
