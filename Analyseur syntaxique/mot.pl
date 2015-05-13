@@ -9,6 +9,7 @@ mot(le, article, le, "l", 1).
 mot(balle, nom, balle, "balle", 1).
 
 mot(bleu, adjectif, bleu, "bleu", 1).
+mot(vert, adjectif, bleu, "vert", 1).
 
 mot(mais, coordination, conjnul, "mais", 1).
 mot(et, coordination, conjnul, "et", 1).

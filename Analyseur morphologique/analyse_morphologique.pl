@@ -3,8 +3,8 @@
 *
 */
 
-element_k(X, L, K) :- L = [X | T], K = 1.
-element_k(X, L, K) :- L = [H | T], element_k(X, T, Y), K is Y + 1.
+element_k(X, L, K) :- L = [X | _], K = 1.
+element_k(X, L, K) :- L = [_ | T], element_k(X, T, Y), K is Y + 1.
 
 make :- consult('mot.pl'), consult('terminaison.pl'), consult('conjugaison.pl').
 
