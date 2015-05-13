@@ -1,5 +1,4 @@
 /*TO DO:
-* Installer SWI PROLOG
 * Traduire le dictionnaire PERL en dictionnaire PROLOG
 *
 */
@@ -26,11 +25,6 @@ genere(Mot, MotCanonique, Categorie, Groupe, Personne) :-
 	terminaison(NomTerminaison, Terminaison, Personne),
 	append(Racine, Terminaison, L),
 	name(Mot, L).
-
-concordance(1, 3).
-concordance(3, 3).
-concordance(2, 6).
-concordance(4, 6).
 
 affiche_personne(_, X, 1) :- X \== verbe, write(', masculin singulier').
 affiche_personne(_, X, 2) :- X \== verbe, write(', masuclin pluriel').

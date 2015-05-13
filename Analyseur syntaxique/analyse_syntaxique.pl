@@ -4,6 +4,7 @@ element_k(X, L, K) :- L = [H | T], element_k(X, T, Y), K is Y + 1.
 make :- consult('mot.pl'), consult('terminaison.pl'), consult('conjugaison.pl').
 
 
+
 ph --> gn(Personne1), suite_verbale(Personne2), {concordance(Personne1, Personne2)}.
 
 suite_verbale(Personne) --> gv(Personne).
