@@ -7,6 +7,10 @@ make :- consult('mot.pl'), consult('terminaison.pl'), consult('conjugaison.pl').
 
 ph(arbre_phrase(GN, SV)) --> gn(Personne1, GN), suite_verbale(Personne2, SV), {concordance(Personne1, Personne2)}.
 
+ph(arbre_phrase(syntagme_nominal(GN1, liaison(et), GN2), SV)) --> gn(3, GN1), [et], gn(3, GN2), suite_verbale(6, SV).
+
+ph(arbre_phrase(syntagme_nominal(GN1, liaison(ou), GN2), SV)) --> gn(3, GN1), [ou], gn(3, GN2), suite_verbale(3, SV).
+
 suite_verbale(Personne, syntagme_verbale(GV)) --> gv(Personne, GV).
 suite_verbale(Personne, syntagme_verbale(GV, GN)) --> gv(Personne, GV), gn(_, GN).
 suite_verbale(Personne, syntagme_verbale(GV, C, PH)) --> gv(Personne, GV), coordination(C), ph(PH).
@@ -24,7 +28,7 @@ suite_nominale_adjectif(Personne, SN) --> suite_nominale(Personne, SN).
 suite_nominale_adjectif(Personne, syntagme_nominal(adjectif(Adjectif), SN)) --> [Adjectif], suite_nominale(Personne, SN), {analyse(Adjectif, _, adjectif, _, Personne)}.
 suite_nominale_adjectif(Personne, syntagme_nominal(adjectif(Adjectif1), adjectif(Adjectif2), SN)) --> [Adjectif1], [Adjectif2], suite_nominale(Personne, SN), {analyse(Adjectif1, _, adjectif, _, Personne), analyse(Adjectif2, _, adjectif, _, Personne)}.
 
-relative(Personne, relative(Relative, SV)) --> [Relative], suite_verbale(Personne_verbale, SV), {analyse(Relative, _, relative, _, _), concordance(Personne, Personne_verbale)}.
+relative(Personne, relative(relatif(Relative), SV)) --> [Relative], suite_verbale(Personne_verbale, SV), {analyse(Relative, _, relative, _, _), concordance(Personne, Personne_verbale)}.
 
 coordination(arbre_coordination(Coordination)) --> [Coordination], {analyse(Coordination, _, coordination, _, _)}.
 
