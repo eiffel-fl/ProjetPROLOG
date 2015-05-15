@@ -1,34 +1,34 @@
 element_k(X, L, K) :- L = [X | _], K = 1.
 element_k(X, L, K) :- L = [_ | T], element_k(X, T, Y), K is Y + 1.
 
-make :- consult('../dictionnaire/mot.pl'), consult('../dictionnaire/terminaison.pl'), consult('../dictionnaire/conjugaison.pl').
+make :- consult('../dictionnaire/mot.pl'), consult('../dictionnaire/terminaison.pl'), consult('../dictionnaire/conjugaison.pl'), consult('../dictionnaire/ontologie.pl').
 
 
 
-ph --> gn(Personne1, Sujet), suite_verbale(Personne2), {concordance(Personne1, Personne2)}.
+ph(Sujet, Verbe, Complément, Z) --> gn(Personne1, Sujet), suite_verbale(Personne2, Verbe, Complément), {concordance(Personne1, Personne2), Z =.. [Verbe, Sujet, Complément], call(Z)}.
 
-suite_verbale(Personne) --> gv(Personne).
-suite_verbale(Personne) --> gv(Personne), gn(_).
-suite_verbale(Personne) --> gv(Personne), coordination, ph.
+suite_verbale(Personne, Verbe, _) --> gv(Personne, Verbe).
+suite_verbale(Personne, Verbe, Complément) --> gv(Personne, Verbe), gn(_, Complément).
+suite_verbale(Personne, Verbe, _) --> gv(Personne, Verbe), coordination, ph.
 
 gn(Personne, Sujet) --> [Article], suite_nominale_adjectif(Personne, Sujet), {analyse(Article, _, article, _, Personne)}.
 
-suite_nominale(Personne, Nom) --> [Nom], {analyse(Nom, _, nom, _, Personne)}.
-suite_nominale(Personne, Nom) --> [Nom], suite_nominale_nom(Personne),  {analyse(Nom, _, nom, _, Personne)}.
+suite_nominale(Personne, NomC) --> [Nom], {analyse(Nom, NomC, nom, _, Personne)}.
+suite_nominale(Personne, NomC) --> [Nom], suite_nominale_nom(Personne),  {analyse(Nom, NomC, nom, _, Personne)}.
 
 suite_nominale_nom(Personne) --> [Adjectif], {analyse(Adjectif, _, adjectif, _, Personne)}.
 suite_nominale_nom(Personne) --> relative(Personne).
 suite_nominale_nom(Personne) --> [Adjectif], relative(Personne), {analyse(Adjectif, _, adjectif, _, Personne)}.
 
 suite_nominale_adjectif(Personne, Sujet) --> suite_nominale(Personne, Sujet).
-suite_nominale_adjectif(Personne) --> [Adjectif], suite_nominale(Personne, Sujet), {analyse(Adjectif, _, adjectif, _, Personne)}.
-suite_nominale_adjectif(Personne) --> [Adjectif1], [Adjectif2], suite_nominale(Personne, Sujet), {analyse(Adjectif1, _, adjectif, _, Personne), analyse(Adjectif2, _, adjectif, _, Personne)}.
+suite_nominale_adjectif(Personne, Sujet) --> [Adjectif], suite_nominale(Personne, Sujet), {analyse(Adjectif, _, adjectif, _, Personne)}.
+suite_nominale_adjectif(Personne, Sujet) --> [Adjectif1], [Adjectif2], suite_nominale(Personne, Sujet), {analyse(Adjectif1, _, adjectif, _, Personne), analyse(Adjectif2, _, adjectif, _, Personne)}.
 
-relative(Personne) --> [Relative], suite_verbale(Personne_verbale), {analyse(Relative, _, relative, _, _), concordance(Personne, Personne_verbale)}.
+relative(Personne) --> [Relative], suite_verbale(Personne_verbale, _, _), {analyse(Relative, _, relative, _, _), concordance(Personne, Personne_verbale)}.
 
 coordination --> [Coordination], {analyse(Coordination, _, coordination, _, _)}.
 
-gv(Personne) --> [Verbe], {analyse(Verbe, _, verbe, _, Personne)}.
+gv(Personne, VerbeC) --> [Verbe], {analyse(Verbe, VerbeC, verbe, _, Personne)}.
 
 analyse(Mot, MotCanonique, Categorie, Groupe, Personne) :-
   name(Mot,LMot),
