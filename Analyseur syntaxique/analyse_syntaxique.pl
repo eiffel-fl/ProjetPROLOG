@@ -1,7 +1,7 @@
 element_k(X, L, K) :- L = [X | _], K = 1.
 element_k(X, L, K) :- L = [_ | T], element_k(X, T, Y), K is Y + 1.
 
-make :- consult('mot.pl'), consult('terminaison.pl'), consult('conjugaison.pl').
+make :- consult('../dictionnaire/mot.pl'), consult('../dictionnaire/terminaison.pl'), consult('../dictionnaire/conjugaison.pl').
 
 
 
