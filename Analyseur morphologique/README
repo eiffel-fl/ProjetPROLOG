@@ -1,0 +1,5 @@
+Après avoir exécuté : consult('analyse_morphologique.pl').
+Il faut absolument exécuter : make.
+Ce prédicat permet de consulter le dictionnaire.
+
+Pour le prédicat genere/5 la variable Groupe correspond au deuxième terme du prédicat conjugaison/4.

@@ -30,6 +30,7 @@ affiche_personne(_, X, 1) :- X \== verbe, write(', masculin singulier'), nl.
 affiche_personne(_, X, 2) :- X \== verbe, write(', masuclin pluriel'), nl.
 affiche_personne(_, X, 3) :- X \== verbe, write(', féminin singulier'), nl.
 affiche_personne(_, X, 4) :- X \== verbe, write(', féminin pluriel'), nl.
+affiche_personne(_, X, 5) :- X \== verbe, write(', adverbe'), nl.
 
 affiche_personne(X, verbe, 1) :- X \== pt, write(', première personne du singulier ').
 affiche_personne(X, verbe, 2) :- X \== pt, write(', deuxième personne du singulier ').

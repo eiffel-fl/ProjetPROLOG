@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY untitled-ontology-2 "http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#"
+     xml:base="http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2"
+     xmlns:untitled-ontology-2="http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Mange -->
+
+    <owl:ObjectProperty rdf:about="&untitled-ontology-2;Mange">
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#animé -->
+
+    <owl:DatatypeProperty rdf:about="&untitled-ontology-2;animé">
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#comestible -->
+
+    <owl:DatatypeProperty rdf:about="&untitled-ontology-2;comestible">
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Aliment -->
+
+    <owl:Class rdf:about="&untitled-ontology-2;Aliment">
+        <rdfs:subClassOf rdf:resource="&untitled-ontology-2;Objet"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Animal -->
+
+    <owl:Class rdf:about="&untitled-ontology-2;Animal"/>
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Légume -->
+
+    <owl:Class rdf:about="&untitled-ontology-2;Légume">
+        <rdfs:subClassOf rdf:resource="&untitled-ontology-2;Aliment"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Mammifère -->
+
+    <owl:Class rdf:about="&untitled-ontology-2;Mammifère">
+        <rdfs:subClassOf rdf:resource="&untitled-ontology-2;Animal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Meuble -->
+
+    <owl:Class rdf:about="&untitled-ontology-2;Meuble">
+        <rdfs:subClassOf rdf:resource="&untitled-ontology-2;Objet"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Objet -->
+
+    <owl:Class rdf:about="&untitled-ontology-2;Objet"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Carotte -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-2;Carotte">
+        <rdf:type rdf:resource="&untitled-ontology-2;Légume"/>
+        <animé rdf:datatype="&xsd;boolean">false</animé>
+        <comestible rdf:datatype="&xsd;boolean">true</comestible>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Chat -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-2;Chat">
+        <rdf:type rdf:resource="&untitled-ontology-2;Mammifère"/>
+        <animé rdf:datatype="&xsd;boolean">true</animé>
+        <comestible rdf:datatype="&xsd;boolean">true</comestible>
+        <Mange rdf:resource="&untitled-ontology-2;Souris"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Souris -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-2;Souris">
+        <rdf:type rdf:resource="&untitled-ontology-2;Mammifère"/>
+        <animé rdf:datatype="&xsd;boolean">true</animé>
+        <comestible rdf:datatype="&xsd;boolean">true</comestible>
+        <Mange rdf:resource="&untitled-ontology-2;Carotte"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/francis/ontologies/2015/4/untitled-ontology-2#Table -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-2;Table">
+        <rdf:type rdf:resource="&untitled-ontology-2;Meuble"/>
+        <comestible rdf:datatype="&xsd;boolean">false</comestible>
+        <animé rdf:datatype="&xsd;boolean">false</animé>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+
