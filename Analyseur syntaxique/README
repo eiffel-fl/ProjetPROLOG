@@ -1,0 +1,10 @@
+L'analyseur syntaxique reconnait les "formes" phrases de votre page web ainsi que :
+* des phrases avec une suite "infinies" d'adjectif : la balle bleue verte ... et brillante roule
+* dans l'autre sens : la bleue verte ... et brillante balle roule
+* des phrases avec une suite "infinies" d'adverbe : la balle roule constamment diaboliquement ... et brillament
+
+Bien entendu il est possible d'inclure dans une même phrase des relatives, des adjectifs, des adverbes et des coordinations.
+
+Concernant l'analyseur morphologique je ne pense pas qu'il soit très optimisé, en effet il serait possible de réecrire des prédicats afin qu'il fasse plus de traitements (par exemple suite_verbale/4 pourrait être condensé en surement 3 formes plutôt qu'en 9).
+
+Pour obtenir l'arbre syntaxique il suffit d'appeler : ph(A, [...], []).
