@@ -3,6 +3,7 @@ Ce dictionnaire est la traduction en PROLOG du dictionnaire PERL.
 Les remarques que je ferai ici valent aussi pour le dictionnaire PERL (j'ai oublié de les faire dans le précédant README) :
 * Il est probable que certains mots soient en double, mais je ne pense pas qu'il y en ait beaucoup.
 * Certaines terminaisons sont inutiles (par exemple vii2, vii3 et vii4).
+* Certaines conjugaisons ne sont pas optimisées : les mots en -tion se conjuguent comme balle, il aurait été plus judicueux de créer une terminaison pour ces mots avec -tion et -tions
 
 Le fichier ontologie.pl est utilisé par l'analyseur sémantique et contient donc des faits.
 
