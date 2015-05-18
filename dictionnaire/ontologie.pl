@@ -58,7 +58,6 @@ nager(X) :- mammifère(X).
 porter(X, Y) :- animé(X), plusgrand(X, Y).
 porter(X) :- animé(X).
 poser(X, Y) :- animé(X), plusgrand(X, Y).
-/*rouiller*/
 ressentir(X) :- mammifère(X).
 sursauter(X) :- mammifère(X).
 saisir(X, Y) :- animé(X), plusgrand(X, Y).
