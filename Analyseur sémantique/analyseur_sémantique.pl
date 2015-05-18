@@ -5,7 +5,11 @@ make :- consult('../dictionnaire/mot.pl'), consult('../dictionnaire/terminaison.
 
 
 
-ph --> gn(Personne1, Sujet), suite_verbale(Personne2, Verbe, Complément), {concordance(Personne1, Personne2), Z =.. [Verbe, Sujet, Complément], call(Z)}.
+ph --> gn(Personne1, Sujet), suite_verbale(Personne2, Verbe, Complément), {concordance(Personne1, Personne2), evaluer(Verbe, Sujet, Complément)}.
+
+evaluer(Verbe, Sujet, Complément) :- nonvar(Complément), Z =.. [Verbe, Sujet, Complément], call(Z).
+
+evaluer(Verbe, Sujet, Complément) :- var(Complément), Z =.. [Verbe, Sujet], call(Z).
 
 suite_verbale(Personne, Verbe, _) --> gv(Personne, Verbe).
 suite_verbale(Personne, Verbe, Complément) --> gv(Personne, Verbe), gn(_, Complément).
