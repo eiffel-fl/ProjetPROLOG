@@ -9,10 +9,11 @@ insecte(pou).
 insecte(abeille).
 
 peut_voler(abeille).
+peut_voler(hibou).
 
 homme(julien).
 
-animé(X) :- animal(X); homme(X).
+animé(X) :- animal(X); homme(X); insecte(X).
 
 carnivore(hibou).
 
@@ -29,4 +30,5 @@ manger(X, Y) :- carnivore(X), comestible(Y).
 manger(X, _) :- animé(X).
 bouffer(X, _) :- manger(X, _).
 aimer(X, _) :- animé(X).
+voler(X, _) :- peut_voler(X).
 bourdonner(X, _) :- peut_voler(X), insecte(X).

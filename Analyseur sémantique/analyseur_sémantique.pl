@@ -14,17 +14,17 @@ suite_verbale(Personne, Verbe, _) --> gv(Personne, Verbe), coordination, ph.
 gn(Personne, Sujet) --> [Article], suite_nominale_adjectif(Personne, Sujet), {analyse(Article, _, article, _, Personne)}.
 
 suite_nominale(Personne, NomC) --> [Nom], {analyse(Nom, NomC, nom, _, Personne)}.
-suite_nominale(Personne, NomC) --> [Nom], suite_nominale_nom(Personne),  {analyse(Nom, NomC, nom, _, Personne)}.
+suite_nominale(Personne, NomC) --> [Nom], suite_nominale_nom(Personne, Verbe),  {analyse(Nom, NomC, nom, _, Personne), Z =.. [Verbe, Nom, _], call(Z)}.
 
-suite_nominale_nom(Personne) --> [Adjectif], {analyse(Adjectif, _, adjectif, _, Personne)}.
-suite_nominale_nom(Personne) --> relative(Personne).
-suite_nominale_nom(Personne) --> [Adjectif], relative(Personne), {analyse(Adjectif, _, adjectif, _, Personne)}.
+suite_nominale_nom(Personne, _) --> [Adjectif], {analyse(Adjectif, _, adjectif, _, Personne)}.
+suite_nominale_nom(Personne, Verbe) --> relative(Personne, Verbe).
+suite_nominale_nom(Personne, Verbe) --> [Adjectif], relative(Personne, Verbe), {analyse(Adjectif, _, adjectif, _, Personne)}.
 
 suite_nominale_adjectif(Personne, Sujet) --> suite_nominale(Personne, Sujet).
 suite_nominale_adjectif(Personne, Sujet) --> [Adjectif], suite_nominale(Personne, Sujet), {analyse(Adjectif, _, adjectif, _, Personne)}.
 suite_nominale_adjectif(Personne, Sujet) --> [Adjectif1], [Adjectif2], suite_nominale(Personne, Sujet), {analyse(Adjectif1, _, adjectif, _, Personne), analyse(Adjectif2, _, adjectif, _, Personne)}.
 
-relative(Personne) --> [Relative], suite_verbale(Personne_verbale, _, _), {analyse(Relative, _, relative, _, _), concordance(Personne, Personne_verbale)}.
+relative(Personne, Verbe) --> [Relative], suite_verbale(Personne_verbale, Verbe, _), {analyse(Relative, _, relative, _, _), concordance(Personne, Personne_verbale)}.
 
 coordination --> [Coordination], {analyse(Coordination, _, coordination, _, _)}.
 
