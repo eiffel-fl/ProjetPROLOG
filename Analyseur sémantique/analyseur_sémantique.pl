@@ -5,32 +5,32 @@ make :- consult('../dictionnaire/mot.pl'), consult('../dictionnaire/terminaison.
 
 
 
-ph --> gn(Personne1, Sujet), suite_verbale(Personne2, Verbe, Complément), {concordance(Personne1, Personne2), evaluer(Verbe, Sujet, Complément)}.
+ph(arbre_sem(Arbre)) --> gn(Personne1, Sujet, Article, Arbre_gn), suite_verbale(Personne2, _, _, Arbre_suite_verbale, Sujet), {concordance(Personne1, Personne2), Arbre =.. [Article, Sujet, AND], AND = &(Arbre_gn, Arbre_suite_verbale)}.
 
-evaluer(Verbe, Sujet, Complément) :- nonvar(Complément), Z =.. [Verbe, Sujet, Complément], call(Z).
+evaluer(Verbe, Sujet, Complément, Verb) :- nonvar(Complément), Verb =.. [Verbe, Sujet, Complément], call(Verb).
 
-evaluer(Verbe, Sujet, Complément) :- var(Complément), Z =.. [Verbe, Sujet], call(Z).
+evaluer(Verbe, Sujet, Complément, Verb) :- var(Complément), Verb =.. [Verbe, Sujet], call(Verb).
 
-suite_verbale(Personne, Verbe, _) --> gv(Personne, Verbe).
-suite_verbale(Personne, Verbe, Complément) --> gv(Personne, Verbe), gn(_, Complément).
-suite_verbale(Personne, Verbe, _) --> gv(Personne, Verbe), coordination, ph.
+suite_verbale(Personne, Verbe, _, Arbre_suite_verbale, Sujet) --> gv(Personne, Verbe), {evaluer(Verbe, Sujet, _, Arbre_suite_verbale)}.
+suite_verbale(Personne, Verbe, Complément, Arbre_suite_verbale, Sujet) --> gv(Personne, Verbe), gn(_, Complément, _, Arbre_gn), {evaluer(Verbe, Sujet, Complément, Arbuste_suite_verbale), Arbre_suite_verbale =.. [&, Arbuste_suite_verbale, Arbre_gn]}.
+suite_verbale(Personne, Verbe, _, Arbre_suite_verbale, _) --> gv(Personne, Verbe), coordination(Arbre_coordination), ph(arbre_sem(Arbre_ph)), {Arbre_suite_verbale =.. [&, Arbre_coordination, arbre_sem(Arbre_ph)]}.
 
-gn(Personne, Sujet) --> [Article], suite_nominale_adjectif(Personne, Sujet), {analyse(Article, _, article, _, Personne)}.
+gn(Personne, Sujet, Article, Arbre_gn) --> [Article], suite_nominale_adjectif(Personne, Sujet, Arbre_gn), {analyse(Article, _, article, _, Personne)}.
 
-suite_nominale(Personne, NomC) --> [Nom], {analyse(Nom, NomC, nom, _, Personne)}.
-suite_nominale(Personne, NomC) --> [Nom], suite_nominale_nom(Personne, Verbe),  {analyse(Nom, NomC, nom, _, Personne), Z =.. [Verbe, Nom, _], call(Z)}.
+suite_nominale(Personne, Sujet, Arbre_gn, _) --> [Nom], {analyse(Nom, Sujet, nom, _, Personne), Arbre_gn =.. [Sujet, Nom]}.
+suite_nominale(Personne, Sujet, Arbre_gn, Verbe) --> [Nom], suite_nominale_nom(Personne, Verbe, Arbre_suite_nominale, Sujet),  {analyse(Nom, Sujet, nom, _, Personne), Arbre_gn =.. [&, Arbuste_gn, Arbre_suite_nominale], Arbuste_gn =.. [Sujet, Sujet]}.
 
-suite_nominale_nom(Personne, _) --> [Adjectif], {analyse(Adjectif, _, adjectif, _, Personne)}.
-suite_nominale_nom(Personne, Verbe) --> relative(Personne, Verbe).
-suite_nominale_nom(Personne, Verbe) --> [Adjectif], relative(Personne, Verbe), {analyse(Adjectif, _, adjectif, _, Personne)}.
+suite_nominale_nom(Personne, _, _, _) --> [Adjectif], {analyse(Adjectif, _, adjectif, _, Personne)}.
+suite_nominale_nom(Personne, Verbe, Arbre_suite_nominale, Sujet) --> relative(Personne, Verbe, Arbre_suite_nominale, Sujet).
+suite_nominale_nom(Personne, Verbe, Arbre_suite_nominale, Sujet) --> [Adjectif], relative(Personne, Verbe, Arbre_suite_nominale, Sujet), {analyse(Adjectif, _, adjectif, _, Personne)}.
 
-suite_nominale_adjectif(Personne, Sujet) --> suite_nominale(Personne, Sujet).
-suite_nominale_adjectif(Personne, Sujet) --> [Adjectif], suite_nominale(Personne, Sujet), {analyse(Adjectif, _, adjectif, _, Personne)}.
-suite_nominale_adjectif(Personne, Sujet) --> [Adjectif1], [Adjectif2], suite_nominale(Personne, Sujet), {analyse(Adjectif1, _, adjectif, _, Personne), analyse(Adjectif2, _, adjectif, _, Personne)}.
+suite_nominale_adjectif(Personne, Sujet, Arbre_gn) --> suite_nominale(Personne, Sujet, Arbre_gn, _).
+suite_nominale_adjectif(Personne, Sujet, Arbre_gn) --> [Adjectif], suite_nominale(Personne, Sujet, Arbre_gn, _), {analyse(Adjectif, _, adjectif, _, Personne)}.
+suite_nominale_adjectif(Personne, Sujet, Arbre_gn) --> [Adjectif1], [Adjectif2], suite_nominale(Personne, Sujet, Arbre_gn, _), {analyse(Adjectif1, _, adjectif, _, Personne), analyse(Adjectif2, _, adjectif, _, Personne)}.
 
-relative(Personne, Verbe) --> [Relative], suite_verbale(Personne_verbale, Verbe, _), {analyse(Relative, _, relative, _, _), concordance(Personne, Personne_verbale)}.
+relative(Personne, Verbe, Arbre_suite_nominale, Sujet) --> [Relative], suite_verbale(Personne_verbale, Verbe, _, Arbre_suite_verbale, Sujet), {analyse(Relative, _, relative, _, _), concordance(Personne, Personne_verbale), Arbre_suite_nominale =.. [&, Arbuste_relative, Arbre_suite_verbale], Arbuste_relative =.. [Relative, Relative]}.
 
-coordination --> [Coordination], {analyse(Coordination, _, coordination, _, _)}.
+coordination(Arbre_coordination) --> [Coordination], {analyse(Coordination, _, coordination, _, _), Arbre_coordination =.. [Coordination, Coordination]}.
 
 gv(Personne, VerbeC) --> [Verbe], {analyse(Verbe, VerbeC, verbe, _, Personne)}.
 
