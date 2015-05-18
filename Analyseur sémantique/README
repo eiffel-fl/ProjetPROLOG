@@ -1,0 +1,16 @@
+Après avoir exécuté : consult('analyse_sémantique.pl').
+Il faut absolument exécuter : make.
+Ce prédicat permet de consulter le dictionnaire et l'ontologie.
+
+L'analyseur sémantique fait aussi de l'analyse syntaxique, il est basé sur une version moins puissante de l'analyseur syntaxique actuel.
+L'analyseur sémantique reconnait quelques petites structures de phrases comme :
+* le chien mange
+* le chien mange le pain
+* le chien qui boite mange
+* le chien qui boite mange le pain
+* le chient qui boite mange et la abeille qui vole roule
+
+Il est basé sur la très petite ontologie (ontologie.pl) donc il ne gère pas énormément de situations.
+
+Il dessine pour les phrases du dessus l'arbre sémantique.
+Il est à noter que l'analyseur sémantique reconnait certaines phrases pour lesquelles il ne sait pas dessiner d'arbre.
